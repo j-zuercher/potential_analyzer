@@ -1,0 +1,53 @@
+{
+  "W2": {
+    "2":  { "low_chf_per_m2":  9500, "high_chf_per_m2": 12000, "source": "RealAdvisor April 2026, Kreis 2 Wollishofen / Leimbach" },
+    "9":  { "low_chf_per_m2":  8000, "high_chf_per_m2": 10500, "source": "RealAdvisor April 2026, Kreis 9 Altstetten / Albisrieden" },
+    "10": { "low_chf_per_m2":  8500, "high_chf_per_m2": 11000, "source": "RealAdvisor April 2026, Kreis 10 Höngg / Wipkingen" },
+    "11": { "low_chf_per_m2":  8000, "high_chf_per_m2": 10500, "source": "RealAdvisor April 2026, Kreis 11 Affoltern / Seebach" },
+    "12": { "low_chf_per_m2":  7000, "high_chf_per_m2":  9500, "source": "RealAdvisor April 2026, Kreis 12 Schwamendingen" }
+  },
+  "W3": {
+    "1":  { "low_chf_per_m2": 16000, "high_chf_per_m2": 20000, "source": "RealAdvisor April 2026, Kreis 1 Altstadt / Hochschulquartier" },
+    "2":  { "low_chf_per_m2": 11000, "high_chf_per_m2": 14500, "source": "RealAdvisor April 2026, Kreis 2 Wollishofen / Enge" },
+    "3":  { "low_chf_per_m2": 11000, "high_chf_per_m2": 14000, "source": "RealAdvisor April 2026, Kreis 3 Wiedikon / Sihlfeld" },
+    "4":  { "low_chf_per_m2": 11500, "high_chf_per_m2": 14500, "source": "RealAdvisor April 2026, Kreis 4 Aussersihl / Langstrasse" },
+    "5":  { "low_chf_per_m2": 12000, "high_chf_per_m2": 15500, "source": "RealAdvisor April 2026, Kreis 5 Escher Wyss / Gewerbeschule" },
+    "6":  { "low_chf_per_m2": 12500, "high_chf_per_m2": 15500, "source": "RealAdvisor April 2026, Kreis 6 Unterstrass / Oberstrass" },
+    "7":  { "low_chf_per_m2": 14000, "high_chf_per_m2": 17500, "source": "RealAdvisor April 2026, Kreis 7 Fluntern / Hottingen / Hirslanden" },
+    "8":  { "low_chf_per_m2": 15000, "high_chf_per_m2": 18000, "source": "Stadt ZH Liegenschaften 2025 / RealAdvisor April 2026, Median +/- 12% within Kreis 8 (Seefeld)" },
+    "9":  { "low_chf_per_m2":  9500, "high_chf_per_m2": 12000, "source": "RealAdvisor April 2026, Kreis 9 Altstetten / Albisrieden" },
+    "10": { "low_chf_per_m2": 10000, "high_chf_per_m2": 13000, "source": "RealAdvisor April 2026, Kreis 10 Höngg / Wipkingen" },
+    "11": { "low_chf_per_m2":  9500, "high_chf_per_m2": 12000, "source": "RealAdvisor April 2026, Kreis 11 Affoltern" },
+    "12": { "low_chf_per_m2":  8500, "high_chf_per_m2": 11000, "source": "RealAdvisor April 2026, Kreis 12 Schwamendingen" }
+  },
+  "W4": {
+    "1":  { "low_chf_per_m2": 17000, "high_chf_per_m2": 21000, "source": "RealAdvisor April 2026, Kreis 1 Altstadt / Lindenhügel" },
+    "2":  { "low_chf_per_m2": 12000, "high_chf_per_m2": 15500, "source": "RealAdvisor April 2026, Kreis 2 Wollishofen / Enge" },
+    "3":  { "low_chf_per_m2": 12000, "high_chf_per_m2": 15000, "source": "RealAdvisor April 2026, Kreis 3 Wiedikon" },
+    "4":  { "low_chf_per_m2": 12500, "high_chf_per_m2": 15500, "source": "RealAdvisor April 2026, Kreis 4 Aussersihl" },
+    "5":  { "low_chf_per_m2": 13000, "high_chf_per_m2": 16500, "source": "RealAdvisor April 2026, Kreis 5 Escher Wyss" },
+    "6":  { "low_chf_per_m2": 13000, "high_chf_per_m2": 16000, "source": "RealAdvisor April 2026, Kreis 6 Unterstrass" },
+    "7":  { "low_chf_per_m2": 15000, "high_chf_per_m2": 18500, "source": "RealAdvisor April 2026, Kreis 7 Fluntern / Hottingen" },
+    "8":  { "low_chf_per_m2": 16000, "high_chf_per_m2": 19500, "source": "RealAdvisor April 2026, Kreis 8 Riesbach / Seefeld" },
+    "9":  { "low_chf_per_m2": 10500, "high_chf_per_m2": 13500, "source": "RealAdvisor April 2026, Kreis 9 Altstetten" },
+    "10": { "low_chf_per_m2": 11000, "high_chf_per_m2": 14000, "source": "RealAdvisor April 2026, Kreis 10 Höngg / Wipkingen" },
+    "11": { "low_chf_per_m2": 10500, "high_chf_per_m2": 13500, "source": "RealAdvisor April 2026, Kreis 11 Oerlikon / Seebach" },
+    "12": { "low_chf_per_m2":  9500, "high_chf_per_m2": 12000, "source": "RealAdvisor April 2026, Kreis 12 Schwamendingen" }
+  },
+  "W5": {
+    "1":  { "low_chf_per_m2": 18000, "high_chf_per_m2": 22000, "source": "RealAdvisor April 2026, Kreis 1 Altstadt (hochwertig)" },
+    "3":  { "low_chf_per_m2": 12500, "high_chf_per_m2": 16000, "source": "RealAdvisor April 2026, Kreis 3 Sihlfeld W5-Lagen" },
+    "4":  { "low_chf_per_m2": 13000, "high_chf_per_m2": 16500, "source": "RealAdvisor April 2026, Kreis 4 Langstrasse W5-Lagen" },
+    "5":  { "low_chf_per_m2": 14000, "high_chf_per_m2": 17500, "source": "RealAdvisor April 2026, Kreis 5 Escher Wyss W5-Lagen" },
+    "6":  { "low_chf_per_m2": 14000, "high_chf_per_m2": 17000, "source": "RealAdvisor April 2026, Kreis 6 Unterstrass W5-Lagen" }
+  },
+  "K": {
+    "1":  { "low_chf_per_m2": 18000, "high_chf_per_m2": 24000, "source": "RealAdvisor April 2026, Kreis 1 Altstadt premium" },
+    "4":  { "low_chf_per_m2": 14000, "high_chf_per_m2": 18000, "source": "RealAdvisor April 2026, Kreis 4 Aussersihl Kernzone" },
+    "5":  { "low_chf_per_m2": 14500, "high_chf_per_m2": 18500, "source": "RealAdvisor April 2026, Kreis 5 Gewerbeschule / Escher Wyss Kernzone" }
+  },
+  "Z5": {
+    "1":  { "low_chf_per_m2": 16000, "high_chf_per_m2": 20000, "source": "RealAdvisor April 2026, Kreis 1 Altstadt Zentrumzone" },
+    "5":  { "low_chf_per_m2": 13000, "high_chf_per_m2": 17000, "source": "RealAdvisor April 2026, Kreis 5 Escher Wyss Zentrumzone" }
+  }
+}

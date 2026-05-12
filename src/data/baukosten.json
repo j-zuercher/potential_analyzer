@@ -1,0 +1,17 @@
+{
+  "Massiv": {
+    "niedrig": { "low_chf_per_m2": 3500, "high_chf_per_m2": 5500 },
+    "mittel":  { "low_chf_per_m2": 4500, "high_chf_per_m2": 7000 },
+    "hoch":    { "low_chf_per_m2": 6000, "high_chf_per_m2": 9000 }
+  },
+  "Holz": {
+    "niedrig": { "low_chf_per_m2": 3000, "high_chf_per_m2": 4500 },
+    "mittel":  { "low_chf_per_m2": 3500, "high_chf_per_m2": 5500 },
+    "hoch":    { "low_chf_per_m2": 4500, "high_chf_per_m2": 7000 }
+  },
+  "Mischbau": {
+    "niedrig": { "low_chf_per_m2": 3500, "high_chf_per_m2": 5000 },
+    "mittel":  { "low_chf_per_m2": 4000, "high_chf_per_m2": 6500 },
+    "hoch":    { "low_chf_per_m2": 5500, "high_chf_per_m2": 8000 }
+  }
+}

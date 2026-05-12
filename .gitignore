@@ -1,0 +1,28 @@
+node_modules
+dist
+dist-ssr
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Build / test caches
+coverage
+.vite
+.vitest
+
+# OS / editor
+Thumbs.db
+*.local
+
+# OneDrive cruft (Office lock files, temp backups)
+~$*
+.~lock.*
+
+# Claude Code: keep shared config + agents + commands, exclude personal local settings
+.claude/settings.local.json
+.claude/.session*

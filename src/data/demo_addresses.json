@@ -1,0 +1,118 @@
+[
+  {
+    "display": "Seefeldstrasse 100, 8008 Zürich",
+    "search_keys": [
+      "seefeldstrasse 100, 8008 zurich",
+      "seefeldstrasse 100",
+      "seefeldstr 100",
+      "seefeldstr 100 8008"
+    ],
+    "egid": 150000001,
+    "egrid": "CH000000000001",
+    "stadtkreis": 8,
+    "zone_code": "W3",
+    "bauweise_bestand": "Massiv",
+    "parzelle_m2": 480,
+    "bestehende_bgf": 410,
+    "baujahr": 1928,
+    "isos_status": "none",
+    "denkmal_status": "none",
+    "notes": "Pitch slot 1: clear high potential, headline number. Illustrative; verify EGID/EGRID/AZ before pitch (spec §12)."
+  },
+  {
+    "display": "Universitätstrasse 50, 8006 Zürich",
+    "search_keys": [
+      "universitatstrasse 50, 8006 zurich",
+      "universitatstrasse 50",
+      "universitatstr 50",
+      "uni str 50"
+    ],
+    "egid": 150000002,
+    "egrid": "CH000000000002",
+    "stadtkreis": 6,
+    "zone_code": "W4",
+    "bauweise_bestand": "Massiv",
+    "parzelle_m2": 600,
+    "bestehende_bgf": 720,
+    "baujahr": 1965,
+    "isos_status": "none",
+    "denkmal_status": "none",
+    "notes": "Pitch slot 2: borderline reserve. Illustrative."
+  },
+  {
+    "display": "Niederdorfstrasse 12, 8001 Zürich",
+    "search_keys": [
+      "niederdorfstrasse 12, 8001 zurich",
+      "niederdorfstrasse 12",
+      "niederdorfstr 12"
+    ],
+    "egid": 150000003,
+    "egrid": "CH000000000003",
+    "stadtkreis": 1,
+    "zone_code": "K",
+    "bauweise_bestand": "Massiv",
+    "parzelle_m2": 280,
+    "bestehende_bgf": 560,
+    "baujahr": 1890,
+    "isos_status": "hinweis",
+    "denkmal_status": "none",
+    "notes": "Pitch slot 3: ISOS Hinweisinventar yellow story. Illustrative."
+  },
+  {
+    "display": "Augustinergasse 5, 8001 Zürich",
+    "search_keys": [
+      "augustinergasse 5, 8001 zurich",
+      "augustinergasse 5",
+      "augustinerg 5"
+    ],
+    "egid": 150000004,
+    "egrid": "CH000000000004",
+    "stadtkreis": 1,
+    "zone_code": "K",
+    "bauweise_bestand": "Massiv",
+    "parzelle_m2": 220,
+    "bestehende_bgf": 480,
+    "baujahr": 1750,
+    "isos_status": "inventar",
+    "denkmal_status": "inventar",
+    "notes": "Pitch slot 4: Denkmalschutz, reserve forced to 0. Illustrative."
+  },
+  {
+    "display": "Zehntenhausstrasse 30, 8046 Zürich",
+    "search_keys": [
+      "zehntenhausstrasse 30, 8046 zurich",
+      "zehntenhausstrasse 30",
+      "zehntenhausstr 30"
+    ],
+    "egid": 150000005,
+    "egrid": "CH000000000005",
+    "stadtkreis": 11,
+    "zone_code": "W3",
+    "bauweise_bestand": "Massiv",
+    "parzelle_m2": 500,
+    "bestehende_bgf": 650,
+    "baujahr": 2018,
+    "isos_status": "none",
+    "denkmal_status": "none",
+    "notes": "Pitch slot 5: freshly built, near-zero reserve. Illustrative."
+  },
+  {
+    "display": "Saatlenstrasse 145, 8050 Zürich",
+    "search_keys": [
+      "saatlenstrasse 145, 8050 zurich",
+      "saatlenstrasse 145",
+      "saatlenstr 145"
+    ],
+    "egid": 150000006,
+    "egrid": "CH000000000006",
+    "stadtkreis": 12,
+    "zone_code": "W3",
+    "bauweise_bestand": "Massiv",
+    "parzelle_m2": 550,
+    "bestehende_bgf": 380,
+    "baujahr": 1955,
+    "isos_status": "none",
+    "denkmal_status": "none",
+    "notes": "Pitch slot 6: BZO 2016 vs 2026 material delta (transition story). Illustrative."
+  }
+]
