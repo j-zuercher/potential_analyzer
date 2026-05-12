@@ -60,7 +60,6 @@ Every artifact references the actual codebase, not boilerplate:
 
 Marked here so they don't get forgotten:
 
-- **Remove `src/compute/smoke.test.ts`** — spec §9 says it should be removed once `compute.test.ts` is the gate. It is now. Good first task.
 - **PLZ → Stadtkreis edge cases.** The `PLZ_TO_KREIS` table in `analyze.ts` is approximate; some 80xx codes split across Kreise. Decide whether to refine or document.
 - **Marktwert refresh cadence.** `marktwert_zh.json` is a 2026 snapshot. Decide who owns refreshes and how often.
 - **`parzelle_m2` default.** When GWR doesn't return `garea`, we default to 500 m². Document or refine.

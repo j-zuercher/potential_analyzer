@@ -70,8 +70,7 @@ src/
 │   ├── computeNetCHF.ts             # Net CHF range, conservative pairing
 │   ├── confidenceScore.ts           # Deterministic deductions from 100
 │   ├── analyze.ts                   # Pipeline orchestrator (analyze + analyzeLive)
-│   ├── compute.test.ts              # ~20 unit tests — the math contract, must stay green
-│   └── smoke.test.ts                # Phase-9 environment smoke; remove once compute.test.ts is the gate
+│   └── compute.test.ts              # ~20 unit tests — the math contract, must stay green
 ├── ui/
 │   ├── AddressInput.tsx
 │   ├── AusbaustandarRadio.tsx

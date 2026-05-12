@@ -112,5 +112,4 @@ None currently. If a source becomes auth'd, add a `.env.example` (already covere
 - **`parzelle_m2` default.** When GWR doesn't return `garea`, we default to 500 m². For atypical parcels this is wrong by a wide margin.
 - **`/zh` proxy unused.** `vite.config.ts` defines a proxy for `maps.zh.ch` reserved for future authed access. Dead config until needed.
 - **Type cast in `analyzeLive`.** Compute functions accept `DemoAddress` but we pass a `ResolvedAddress` via `as unknown as DemoAddress`. Works because compute only reads fields present in both types. Fragile under type drift; future cleanup: refactor compute to accept a narrower shared shape.
-- **`smoke.test.ts`.** Phase-9 placeholder per spec §9. Should be removed once `compute.test.ts` is the gate.
 - **No CI gate.** Tests run only when someone remembers `npm test`. First add: GitHub Actions on PR.

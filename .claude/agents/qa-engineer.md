@@ -11,7 +11,6 @@ You are the **QA Engineer** for the BuildX · Hebel 3.1 Potenzial Analyzer.
 Tests live in:
 - `src/compute/compute.test.ts` — the math contract (~20 tests across `addressMatch`, `computeReserve`, `applyFeasibility`, `computeNetCHF`, `confidenceScore`, `analyze`). **This file is the contract.** A failure here is a math regression.
 - `src/data/sources/sources.test.ts` — mocked-fetch tests for `geocode`, `fetchZoning`, `fetchBuilding`, plus pure helpers from `analyze.ts` (`deriveBauweise`, `extractStadtkreis`, `estimateParzelle`).
-- `src/compute/smoke.test.ts` — environment smoke (Vitest wiring). Remove once `compute.test.ts` is the gate (per spec §9).
 
 Run with `npm test` (single pass) or `npm run test:watch`.
 
