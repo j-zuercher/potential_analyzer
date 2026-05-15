@@ -99,13 +99,14 @@ describe('applyFeasibility', () => {
 
 describe('computeNetCHF', () => {
   it('Seefeld worked example: net low ~1.27M, high ~2.60M', () => {
-    // reserve 214, marktwert[W3][8]=15-18k, baukosten[Massiv]=4.5-7k,
-    // surcharge 1.344 (STATIK 20% + NEBEN 12%) → net_low ≈ 1'196'688, net_high ≈ 2'557'728
+    // reserve 214, marktwert[W3][8]=15-18k, baukosten[Massiv]=5.0-7k,
+    // surcharge 1.344 (STATIK 20% + NEBEN 12%) → net_low ≈ 1'196'688, net_high ≈ 2'413'920
+    // Floor raised 4'500→5'000 per 2025 Zürich cost calibration (ETH/SFP benchmarks).
     const r = computeNetCHF(seefeld, 214, economics);
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.low).toBeCloseTo(1_196_688, -2);
-    expect(r.data.high).toBeCloseTo(2_557_728, -2);
+    expect(r.data.high).toBeCloseTo(2_413_920, -2);
   });
   it('reserve 0 → all CHF values 0', () => {
     const r = computeNetCHF(seefeld, 0, economics);
