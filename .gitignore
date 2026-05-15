@@ -14,6 +14,7 @@ dist-ssr
 coverage
 .vite
 .vitest
+*.tsbuildinfo
 
 # OS / editor
 Thumbs.db
