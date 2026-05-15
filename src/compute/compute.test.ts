@@ -10,7 +10,7 @@ import { computeNetCHF } from './computeNetCHF';
 import { confidenceScore } from './confidenceScore';
 import { analyze } from './analyze';
 
-const { addresses, economics } = fixtures;
+const { addresses, economics, baukosten } = fixtures;
 // Demo addresses by pitch role (spec §8 ordering).
 const seefeld = addresses[0];   // high potential
 const unterstrass = addresses[1]; // borderline
@@ -98,18 +98,34 @@ describe('applyFeasibility', () => {
 });
 
 describe('computeNetCHF', () => {
-  it('Seefeld worked example: net low ~1.27M, high ~2.60M', () => {
-    // reserve 214, marktwert[W3][8]=15-18k, baukosten[Massiv]=5.0-7k,
-    // surcharge 1.344 (STATIK 20% + NEBEN 12%) → net_low ≈ 1'196'688, net_high ≈ 2'413'920
-    // Floor raised 4'500→5'000 per 2025 Zürich cost calibration (ETH/SFP benchmarks).
-    const r = computeNetCHF(seefeld, 214, economics);
+  // Seefeld: zone W3, Kreis 8, Massiv, reserve 214 m²
+  // marktwert[W3][8] = 15'000–18'000, surcharge = 1.344 (STATIK 20% + NEBEN 12%)
+  it('Seefeld niedrig: net_low 1\'628\'112, net_high 2\'701\'536', () => {
+    // Massiv niedrig: 4'000–5'500 → conservative pairing
+    const r = computeNetCHF(seefeld, 214, economics, baukosten, 'niedrig');
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.data.low).toBeCloseTo(1_628_112, -2);
+    expect(r.data.high).toBeCloseTo(2_701_536, -2);
+  });
+  it('Seefeld mittel: net_low 1\'196\'688, net_high 2\'413\'920', () => {
+    // Massiv mittel: 5'000–7'000 (calibrated per 2025 Zürich benchmarks, ETH/SFP)
+    const r = computeNetCHF(seefeld, 214, economics, baukosten, 'mittel');
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.low).toBeCloseTo(1_196_688, -2);
     expect(r.data.high).toBeCloseTo(2_413_920, -2);
   });
+  it('Seefeld hoch: net_low 621\'456, net_high 2\'126\'304', () => {
+    // Massiv hoch: 6'000–9'000 → highest build cost narrows upside most
+    const r = computeNetCHF(seefeld, 214, economics, baukosten, 'hoch');
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.data.low).toBeCloseTo(621_456, -2);
+    expect(r.data.high).toBeCloseTo(2_126_304, -2);
+  });
   it('reserve 0 → all CHF values 0', () => {
-    const r = computeNetCHF(seefeld, 0, economics);
+    const r = computeNetCHF(seefeld, 0, economics, baukosten, 'mittel');
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.low).toBe(0);
@@ -137,7 +153,7 @@ describe('confidenceScore', () => {
 
 describe('analyze (end-to-end pipeline)', () => {
   it('Seefeld: full result matches spec §7.5', () => {
-    const r = analyze('Seefeldstrasse 100, 8008 Zürich', addresses, economics);
+    const r = analyze('Seefeldstrasse 100, 8008 Zürich', addresses, economics, baukosten);
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.reserve_m2.bzo_2026).toBeCloseTo(214);
@@ -150,7 +166,7 @@ describe('analyze (end-to-end pipeline)', () => {
     expect(r.data.net_chf.low).toBeCloseTo(1_196_688, -2);
   });
   it('Niederdorf: ISOS yellow, confidence 55, full reserve preserved', () => {
-    const r = analyze('niederdorfstrasse 12', addresses, economics);
+    const r = analyze('niederdorfstrasse 12', addresses, economics, baukosten);
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.feasibility.isos).toBe('yellow');
@@ -159,7 +175,7 @@ describe('analyze (end-to-end pipeline)', () => {
     expect(r.data.caveats[0]).toContain('ISOS');
   });
   it('Augustiner: Denkmal red, reserve 0, CHF all 0', () => {
-    const r = analyze('Augustinergasse 5', addresses, economics);
+    const r = analyze('Augustinergasse 5', addresses, economics, baukosten);
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.feasibility.denkmal).toBe('red');
@@ -168,7 +184,7 @@ describe('analyze (end-to-end pipeline)', () => {
     expect(r.data.net_chf.high).toBe(0);
   });
   it('garbage input: no_match', () => {
-    const r = analyze('asdf qwerty', addresses, economics);
+    const r = analyze('asdf qwerty', addresses, economics, baukosten);
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.reason).toBe('no_match');
   });

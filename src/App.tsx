@@ -39,7 +39,8 @@ export function App() {
       input,
       userInputs,
       liveSources,
-      fixtures.economics
+      fixtures.economics,
+      fixtures.baukosten
     );
     if (result.ok) {
       setState({ kind: 'result', data: result.data });

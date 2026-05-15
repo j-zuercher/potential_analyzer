@@ -1,7 +1,7 @@
 // Net CHF range from reserve, marktwert, baukosten. Decision D: bauweise of
 // the Aufstockung matches existing bauweise (spec §7.3).
 
-import type { DemoAddress, EconomicAssumptions } from '../data/types';
+import type { DemoAddress, EconomicAssumptions, BaukostenTable, Ausbaustandard } from '../data/types';
 import { ok, fail, type Result } from '../lib/result';
 
 export interface NetCHFOutput {
@@ -13,7 +13,9 @@ export interface NetCHFOutput {
 export function computeNetCHF(
   address: DemoAddress,
   reserve_2026: number,
-  economics: EconomicAssumptions
+  economics: EconomicAssumptions,
+  baukostenTable: BaukostenTable,
+  ausbaustandard: Ausbaustandard
 ): Result<NetCHFOutput, 'no_marktwert_data' | 'no_baukosten_data'> {
   if (reserve_2026 <= 0) {
     return ok({ low: 0, base: 0, high: 0 });
@@ -25,7 +27,9 @@ export function computeNetCHF(
   const cell = zoneCells[String(address.stadtkreis)];
   if (!cell) return fail('no_marktwert_data');
 
-  const baukosten = economics.baukosten[address.bauweise_bestand];
+  const baukostenRow = baukostenTable[address.bauweise_bestand];
+  if (!baukostenRow) return fail('no_baukosten_data');
+  const baukosten = baukostenRow[ausbaustandard];
   if (!baukosten) return fail('no_baukosten_data');
 
   const { STATIK_SURCHARGE_PCT, NEBENKOSTEN_PCT } = economics.constants;

@@ -1,7 +1,7 @@
 {
   "Massiv": {
-    "niedrig": { "low_chf_per_m2": 3500, "high_chf_per_m2": 5500 },
-    "mittel":  { "low_chf_per_m2": 4500, "high_chf_per_m2": 7000 },
+    "niedrig": { "low_chf_per_m2": 4000, "high_chf_per_m2": 5500 },
+    "mittel":  { "low_chf_per_m2": 5000, "high_chf_per_m2": 7000 },
     "hoch":    { "low_chf_per_m2": 6000, "high_chf_per_m2": 9000 }
   },
   "Holz": {

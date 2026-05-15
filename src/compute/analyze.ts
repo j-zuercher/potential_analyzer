@@ -6,6 +6,7 @@ import type {
   AnalysisResult,
   LiveAnalysisResult,
   EconomicAssumptions,
+  BaukostenTable,
   DemoAddress,
   ResolvedAddress,
   UserInputs,
@@ -102,7 +103,8 @@ export function extractStadtkreis(display: string): Stadtkreis | undefined {
 export function analyze(
   input: string,
   addresses: readonly DemoAddress[],
-  economics: EconomicAssumptions
+  economics: EconomicAssumptions,
+  baukostenTable: BaukostenTable
 ): Result<AnalysisResult, AnalyzeFailure> {
   const matched = addressMatch(input, addresses);
   if (!matched.ok) return fail('no_match');
@@ -114,7 +116,8 @@ export function analyze(
   const feas = applyFeasibility(address, reserveResult.data);
   const reserve_2026 = feas.reserve_m2.bzo_2026;
 
-  const chfResult = computeNetCHF(address, reserve_2026, economics);
+  // v0 path has no UserInputs — mittel is the reference tier (spec §7.3).
+  const chfResult = computeNetCHF(address, reserve_2026, economics, baukostenTable, 'mittel');
   if (!chfResult.ok) return fail(chfResult.reason);
 
   const conf = confidenceScore(address);
@@ -137,7 +140,8 @@ export async function analyzeLive(
   input: string,
   userInputs: UserInputs,
   sources: Sources,
-  economics: EconomicAssumptions
+  economics: EconomicAssumptions,
+  baukostenTable: BaukostenTable
 ): Promise<Result<LiveAnalysisResult, AnalyzeFailure>> {
   // 1. Geocode the free-form address string.
   const geoResult = await sources.geocode(input);
@@ -193,7 +197,7 @@ export async function analyzeLive(
 
   const feas = applyFeasibility(asDemo, reserveResult.data);
 
-  const chfResult = computeNetCHF(asDemo, feas.reserve_m2.bzo_2026, economics);
+  const chfResult = computeNetCHF(asDemo, feas.reserve_m2.bzo_2026, economics, baukostenTable, userInputs.ausbaustandard);
   if (!chfResult.ok) return fail(chfResult.reason);
 
   const conf = confidenceScore(asDemo);
