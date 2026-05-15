@@ -154,8 +154,8 @@ These are visible in the codebase (look for `// Spec §X.Y` markers) and must be
 ## 12. Git workflow
 
 - **Default branch:** `main` (protected — no direct pushes).
-- **Feature branches:** `feature/JIRA-123-short-description` when a Jira ticket exists; `feature/short-description` otherwise. Hotfixes: `fix/short-description`.
-- **Commit subject:** `JIRA-123: short description` (imperative). If no ticket, just imperative subject.
+- **Feature branches:** `feature/SCRUM-123-short-description` when a Jira ticket exists; `feature/short-description` otherwise. Hotfixes: `fix/short-description`.
+- **Commit subject:** `SCRUM-123: short description` (imperative). If no ticket, just imperative subject.
 - **Commit body:** the why. Include spec-section reference if a rule applies.
 - **One feature / fix per PR.** Keep diffs reviewable. Big refactors get split or get a `chore/` branch with an upfront approval.
 - **PR template** at `.github/pull_request_template.md` is required-reading; fill it out.
