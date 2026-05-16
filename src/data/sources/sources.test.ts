@@ -21,14 +21,14 @@ function throwingFetch(): typeof fetch {
 // ─── geocode ──────────────────────────────────────────────────────────────────
 
 describe('geocode', () => {
-  it('happy path: strips HTML label, returns lon/lat/egid', async () => {
+  it('happy path: strips HTML label, parses egid and gwrKey from featureId', async () => {
     const body = {
       results: [{
         attrs: {
           lon: 8.5432,
           lat: 47.3769,
           label: '<b>Bahnhofstrasse</b> 42, 8001 Zürich',
-          egid: 123456,
+          featureId: '123456_0', // real API format
         },
       }],
     };
@@ -37,8 +37,22 @@ describe('geocode', () => {
     if (!r.ok) return;
     expect(r.data.lon).toBeCloseTo(8.5432);
     expect(r.data.lat).toBeCloseTo(47.3769);
-    expect(r.data.egid).toBe(123456);
+    expect(r.data.egid).toBe(123456);     // parsed from featureId
+    expect(r.data.gwrKey).toBe('123456_0'); // passed to fetchBuilding
     expect(r.data.display).toBe('Bahnhofstrasse 42, 8001 Zürich');
+  });
+
+  it('falls back to attrs.egid when featureId absent (legacy mock responses)', async () => {
+    const body = {
+      results: [{
+        attrs: { lon: 8.5432, lat: 47.3769, label: 'Test', egid: 99999 },
+      }],
+    };
+    const r = await geocode('Test', mockFetch(body));
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.data.egid).toBe(99999);
+    expect(r.data.gwrKey).toBeUndefined(); // no featureId → no gwrKey
   });
 
   it('empty results → no_match', async () => {
@@ -80,7 +94,7 @@ describe('fetchZoning', () => {
 // ─── fetchBuilding ────────────────────────────────────────────────────────────
 
 describe('fetchBuilding', () => {
-  it('undefined egid → no_egid without calling fetch', async () => {
+  it('undefined gwrKey → no_egid without calling fetch', async () => {
     const spy = vi.fn();
     const r = await fetchBuilding(undefined, spy as unknown as typeof fetch);
     expect(r.ok).toBe(false);
@@ -99,7 +113,7 @@ describe('fetchBuilding', () => {
         },
       },
     };
-    const r = await fetchBuilding(99999, mockFetch(body));
+    const r = await fetchBuilding('99999_0', mockFetch(body));
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.data.bestehende_bgf).toBe(720); // 4 × 180

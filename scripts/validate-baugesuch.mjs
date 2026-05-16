@@ -57,7 +57,9 @@ async function geocode(address) {
   const body = await r.json();
   const attrs = body.results?.[0]?.attrs;
   if (!attrs || typeof attrs.lat !== 'number') return null;
-  return { lat: attrs.lat, lon: attrs.lon, egid: attrs.egid ?? null, display: attrs.label?.replace(/<[^>]+>/g,'').trim() ?? address };
+  const gwrKey = typeof attrs.featureId === 'string' ? attrs.featureId : null;
+  const egid = gwrKey ? parseInt(gwrKey.split('_')[0], 10) : (attrs.egid ?? null);
+  return { lat: attrs.lat, lon: attrs.lon, egid, gwrKey, display: attrs.label?.replace(/<[^>]+>/g,'').trim() ?? address };
 }
 
 async function fetchZone(lat, lon) {
@@ -81,19 +83,19 @@ async function fetchZone(lat, lon) {
   return Object.keys(counts).sort((a,b) => (counts[b]-counts[a]) || (RANK[a]??99)-(RANK[b]??99))[0];
 }
 
-async function fetchBuilding(egid) {
-  if (!egid) return null;
-  const url = `https://api3.geo.admin.ch/rest/services/api/MapServer/ch.bfs.gebaeude_wohnungs_register/${egid}?sr=4326&returnGeometry=false`;
+async function fetchBuilding(gwrKey) {
+  if (!gwrKey) return null;
+  const url = `https://api3.geo.admin.ch/rest/services/ech/MapServer/ch.bfs.gebaeude_wohnungs_register/${gwrKey}?returnGeometry=false`;
   const r = await fetch(url);
   if (!r.ok) return null;
   const body = await r.json();
-  const attrs = body.feature?.attributes ?? body.results?.[0]?.attributes;
+  const attrs = body.feature?.attributes;
   if (!attrs) return null;
   return {
-    garea:  typeof attrs.garea === 'number'  ? attrs.garea  : null,
-    gastw:  typeof attrs.gastw === 'number'  ? attrs.gastw  : null,
-    baujahr: typeof attrs.gbauj === 'number' ? attrs.gbauj  : null,
-    egrid:  attrs.egrid ?? null,
+    garea:   typeof attrs.garea  === 'number' ? attrs.garea  : null,
+    gastw:   typeof attrs.gastw  === 'number' ? attrs.gastw  : null,
+    baujahr: typeof attrs.gbauj  === 'number' ? attrs.gbauj  : null,
+    egrid:   attrs.egrid ?? null,
   };
 }
 
@@ -148,11 +150,12 @@ for (const c of CASES) {
     if (!zone) { console.log('  ✗ Zone: no result'); continue; }
     console.log(`  Zone: ${zone}`);
 
-    const bldg = await fetchBuilding(geo.egid);
+    console.log(`  gwrKey: ${geo.gwrKey ?? 'n/a'}`);
+    const bldg = await fetchBuilding(geo.gwrKey);
     if (bldg) {
       console.log(`  GWR: garea=${bldg.garea} m², gastw=${bldg.gastw}, baujahr=${bldg.baujahr}`);
     } else {
-      console.log('  GWR: no data (EGID missing or not found)');
+      console.log('  GWR: no data (gwrKey missing or lookup failed)');
     }
 
     // Parzelle estimation
@@ -165,7 +168,8 @@ for (const c of CASES) {
     // BGF estimation
     let bestehende_bgf = 0;
     if (bldg?.garea && bldg?.gastw) {
-      bestehende_bgf = Math.round(bldg.garea * bldg.gastw * 0.8); // GASTW × GAREA × 0.8 proxy
+      // GASTW × GAREA proxy (same formula as building.ts — no 0.8 factor there, keep consistent)
+      bestehende_bgf = Math.round(bldg.garea * bldg.gastw);
     }
     console.log(`  Bestehende BGF: ${bestehende_bgf} m² (${bldg ? 'GWR proxy' : 'unknown → 0'})`);
 

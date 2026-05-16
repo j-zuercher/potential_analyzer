@@ -35,12 +35,14 @@ interface GWRResponse {
 }
 
 export async function fetchBuilding(
-  egid: number | undefined,
+  gwrKey: string | undefined,
   fetchFn: typeof fetch = fetch
 ): Promise<Result<BuildingResult, BuildingFailure>> {
-  if (egid === undefined) return fail('no_egid');
+  if (!gwrKey) return fail('no_egid');
 
-  const url = `${GWR_BASE}/${egid}?returnGeometry=false`;
+  // gwrKey is the featureId string from the geocoder, e.g. "151889_0".
+  // The GWR MapServer requires this exact form — bare numeric IDs return 404.
+  const url = `${GWR_BASE}/${gwrKey}?returnGeometry=false`;
 
   let response: Response;
   try {

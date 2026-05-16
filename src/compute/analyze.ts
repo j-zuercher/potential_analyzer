@@ -39,7 +39,7 @@ export type AnalyzeFailure =
 export interface Sources {
   geocode: (query: string) => Promise<Result<GeocoderResult, GeocoderFailure>>;
   fetchZoning: (lat: number, lon: number) => Promise<Result<ZoningResult, ZoningFailure>>;
-  fetchBuilding: (egid: number | undefined) => Promise<Result<BuildingResult, BuildingFailure>>;
+  fetchBuilding: (gwrKey: string | undefined) => Promise<Result<BuildingResult, BuildingFailure>>;
 }
 
 // ─── Helpers (pure, exported for testing) ────────────────────────────────────
@@ -163,7 +163,7 @@ export async function analyzeLive(
   //    (treats parcel as empty, confidence docked below).
   const [zoningResult, buildingResult] = await Promise.all([
     sources.fetchZoning(geo.lat, geo.lon),
-    sources.fetchBuilding(geo.egid),
+    sources.fetchBuilding(geo.gwrKey),
   ]);
 
   if (!zoningResult.ok) return fail('no_zone_data');
@@ -212,9 +212,10 @@ export async function analyzeLive(
 
   const conf = confidenceScore(asDemo);
 
-  // 6. Dock 10 pts when BGF came from the GASTW×GAREA GWR proxy.
+  // 6. Dock pts for BGF data quality: 10 when BGF is a GWR GASTW×GAREA proxy (~±20% error),
+  //    20 when BGF is entirely unavailable (GWR lookup failed, parcel treated as empty).
   const bgfFromProxy = building !== null;
-  const score = Math.max(0, conf.score - (bgfFromProxy ? 10 : 0));
+  const score = Math.max(0, conf.score - (bgfFromProxy ? 10 : 20));
   const caveats = bgfFromProxy
     ? [copy.caveats.bgfProxy, ...conf.caveats]
     : [copy.caveats.bgfUnavailable, ...conf.caveats];

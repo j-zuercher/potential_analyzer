@@ -8,7 +8,8 @@ export interface GeocoderResult {
   lon: number;
   lat: number;
   egrid?: string;
-  egid?: number;
+  egid?: number;      // numeric EGID for display (parsed from gwrKey)
+  gwrKey?: string;    // "151889_0" style key — required for GWR MapServer lookup
 }
 
 export type GeocoderFailure = 'no_match' | 'network_error';
@@ -17,7 +18,8 @@ interface SearchAttrs {
   lon?: unknown;
   lat?: unknown;
   label?: unknown;
-  egid?: unknown;
+  featureId?: unknown; // "151889_0" — EGID + entrance seq; present in real API responses
+  egid?: unknown;      // numeric EGID — present in mock responses, absent in real API
   egrid?: unknown;
 }
 
@@ -57,18 +59,27 @@ export async function geocode(
   const attrs = body.results?.[0]?.attrs;
   if (!attrs) return fail('no_match');
 
-  const { lon, lat, label, egid, egrid } = attrs;
+  const { lon, lat, label, featureId, egid, egrid } = attrs;
   if (typeof lon !== 'number' || typeof lat !== 'number') return fail('no_match');
 
   // Strip HTML tags the API wraps around matched tokens (e.g. <b>Bahnhofstrasse</b>).
   const display =
     typeof label === 'string' ? label.replace(/<[^>]+>/g, '').trim() : trimmed;
 
+  // The real API returns featureId = "151889_0" (EGID_entranceSeq).
+  // The GWR MapServer requires the full featureId string for lookup — bare numeric IDs 404.
+  // We also parse the numeric EGID for display in the result card header.
+  const gwrKey = typeof featureId === 'string' && featureId ? featureId : undefined;
+  const parsedEgid = gwrKey
+    ? parseInt(gwrKey.split('_')[0], 10)
+    : (typeof egid === 'number' ? egid : undefined);
+
   return ok({
     display,
     lon,
     lat,
     ...(typeof egrid === 'string' && egrid ? { egrid } : {}),
-    ...(typeof egid === 'number' ? { egid } : {}),
+    ...(parsedEgid !== undefined && !isNaN(parsedEgid) ? { egid: parsedEgid } : {}),
+    ...(gwrKey !== undefined ? { gwrKey } : {}),
   });
 }

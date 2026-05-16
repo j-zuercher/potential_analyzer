@@ -17,7 +17,7 @@ import { EmptyState } from './ui/EmptyState';
 const liveSources: Sources = {
   geocode: (query) => geocode(query),
   fetchZoning: (lat, lon) => fetchZoning(lat, lon),
-  fetchBuilding: (egid) => fetchBuilding(egid),
+  fetchBuilding: (gwrKey) => fetchBuilding(gwrKey),
 };
 
 type ViewState =
