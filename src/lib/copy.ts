@@ -33,6 +33,10 @@ export const copy = {
     headline: 'Daten konnten nicht geladen werden',
     body: 'Zonendaten oder Gebäudedaten sind vorübergehend nicht verfügbar. Bitte erneut versuchen.',
   },
+  notResidentialState: {
+    headline: 'Kein Wohngebäude',
+    body: 'Die Adresse gehört zu einem Nicht-Wohngebäude (z.B. Verwaltung, Garage oder Infrastruktur). Aufstockungspotenzial wird nur für Wohnliegenschaften berechnet.',
+  },
   result: {
     reserveLabel: 'Zusätzliche m² BGF',
     reserveSubline: 'AZ Reserve',

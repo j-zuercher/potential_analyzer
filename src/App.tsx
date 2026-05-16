@@ -46,6 +46,8 @@ export function App() {
       setState({ kind: 'result', data: result.data });
     } else if (result.reason === 'no_match' || result.reason === 'no_stadtkreis') {
       setState({ kind: 'no_match' });
+    } else if (result.reason === 'not_residential') {
+      setState({ kind: 'error', reason: result.reason });
     } else {
       setState({ kind: 'error', reason: result.reason });
     }
@@ -86,7 +88,13 @@ export function App() {
           {state.kind === 'no_match' && (
             <EmptyState examples={fixtures.addresses} />
           )}
-          {state.kind === 'error' && (
+          {state.kind === 'error' && state.reason === 'not_residential' && (
+            <EmptyState
+              headline={copy.notResidentialState.headline}
+              body={copy.notResidentialState.body}
+            />
+          )}
+          {state.kind === 'error' && state.reason !== 'not_residential' && (
             <EmptyState
               headline={copy.errorState.headline}
               body={copy.errorState.body}

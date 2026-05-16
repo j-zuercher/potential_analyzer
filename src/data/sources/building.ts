@@ -13,6 +13,7 @@ export interface BuildingResult {
   baujahr?: number;
   egrid?: string;
   garea?: number; // footprint m² — used to estimate parzelle_m2 in analyze.ts
+  gkat?: number;  // GWR building category: 1010–1040 = residential; ≥1060 = non-residential
 }
 
 export type BuildingFailure = 'no_egid' | 'not_found' | 'network_error';
@@ -22,10 +23,11 @@ const GWR_BASE =
   '/ch.bfs.gebaeude_wohnungs_register';
 
 interface GWRAttributes {
-  gastw?: unknown;   // Anzahl Vollgeschosse (floors)
-  garea?: unknown;   // Gebäudegrundfläche in m²
-  gbauj?: unknown;   // Baujahr
+  gastw?: unknown;      // Anzahl Vollgeschosse (floors)
+  garea?: unknown;      // Gebäudegrundfläche in m²
+  gbauj?: unknown;      // Baujahr
   egris_egrid?: unknown;
+  gkat?: unknown;       // Gebäudekategorie: 1010–1040 residential, ≥1060 non-residential
 }
 
 interface GWRResponse {
@@ -82,5 +84,10 @@ export async function fetchBuilding(
 
   const garea = footprint > 0 ? footprint : undefined;
 
-  return ok({ bestehende_bgf, baujahr, egrid, garea });
+  const gkat =
+    typeof attrs.gkat === 'number' && attrs.gkat > 0
+      ? (attrs.gkat as number)
+      : undefined;
+
+  return ok({ bestehende_bgf, baujahr, egrid, garea, gkat });
 }

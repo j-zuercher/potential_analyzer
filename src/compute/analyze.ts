@@ -32,7 +32,8 @@ export type AnalyzeFailure =
   | 'no_marktwert_data'
   | 'no_baukosten_data'
   | 'no_zone_data'
-  | 'no_stadtkreis';
+  | 'no_stadtkreis'
+  | 'not_residential'; // GWR gkat ≥ 1060: bus stops, admin buildings, garages
 
 // Injected fetcher bundle — each field is a function matching the source's
 // signature minus the optional fetchFn param (caller wires that via closure).
@@ -169,6 +170,13 @@ export async function analyzeLive(
   if (!zoningResult.ok) return fail('no_zone_data');
   const zoning = zoningResult.data;
   const building = buildingResult.ok ? buildingResult.data : null;
+
+  // Reject addresses where GWR confirms a non-residential building (gkat ≥ 1060).
+  // Residential codes: 1010 EFH, 1020 ZFH, 1025 Reihe, 1030 MFH, 1040 mixed.
+  // gkat ≥ 1060: admin buildings, garages, bus stops, provisional shelters.
+  if (building?.gkat !== undefined && building.gkat >= 1060) {
+    return fail('not_residential');
+  }
 
   // 3. Derive Stadtkreis from PLZ in the geocoder display string.
   const stadtkreis = extractStadtkreis(geo.display);

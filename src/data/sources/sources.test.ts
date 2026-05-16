@@ -102,7 +102,7 @@ describe('fetchBuilding', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('happy path: BGF = gastw × garea, baujahr and egrid extracted', async () => {
+  it('happy path: BGF = gastw × garea, baujahr, egrid, and gkat extracted', async () => {
     const body = {
       feature: {
         attributes: {
@@ -110,6 +110,7 @@ describe('fetchBuilding', () => {
           garea: 180.0,
           gbauj: 1968,
           egris_egrid: 'CH935200455',
+          gkat: 1030,
         },
       },
     };
@@ -120,6 +121,17 @@ describe('fetchBuilding', () => {
     expect(r.data.baujahr).toBe(1968);
     expect(r.data.egrid).toBe('CH935200455');
     expect(r.data.garea).toBe(180);
+    expect(r.data.gkat).toBe(1030);
+  });
+
+  it('non-residential gkat is passed through (caller decides)', async () => {
+    const body = {
+      feature: { attributes: { gastw: 1, garea: 52, gbauj: 1957, gkat: 1060 } },
+    };
+    const r = await fetchBuilding('302006041_0', mockFetch(body));
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.data.gkat).toBe(1060);
   });
 });
 
