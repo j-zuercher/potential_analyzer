@@ -190,9 +190,13 @@ Standard flow for any non-trivial change:
 7. **`/update-docs`** → `documentation-agent` updates README / architecture.md / decisions/ / lessons-learned as needed.
 8. **Open PR** with the template filled out.
 9. **Human merge.**
-10. **`/learn-from-task`** → `learning-agent` extracts high-signal lessons into `docs/lessons-learned.md`.
+10. **`/learn-from-task`** → `learning-agent` extracts high-signal lessons into `docs/lessons-learned.md`. **This step is mandatory after every non-trivial PR merge** — not optional. If you skip it, the team's calibration erodes.
 
 For trivial changes (typo, comment fix, single-line tweak), skip steps 3–7. Still run `npm test` before pushing.
+
+### Token efficiency
+
+Before launching any research or long-running sub-agent, consult the **`token-manager` agent** (`.claude/agents/token-manager.md`). It sizes the task, sets scope caps, and prevents redundant work. Skip it only for trivial single-tool lookups.
 
 ## 15. Guardrails
 

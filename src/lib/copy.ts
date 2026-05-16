@@ -47,6 +47,21 @@ export const copy = {
     bzoFooter:
       'BZO 2026 (öffentliche Auflage), negative Vorwirkung beachtet',
   },
+  verdict: {
+    stark: 'Starkes Potenzial',
+    pruefenswert: 'Prüfenswert',
+    kein: 'Kein Potenzial',
+  },
+  bgfBar: {
+    title: 'BGF Ausnützung',
+    bestandLabel: 'Bestand',
+    reserve2016Label: 'Reserve BZO 2016',
+    reserve2026Label: 'Reserve BZO 2026',
+    maxLabel: 'Max BZO 2026',
+  },
+  map: {
+    openMap: 'Auf Karte zeigen →',
+  },
   caveats: {
     isosHinweis: 'ISOS Hinweisinventar, Einzelfallprüfung erforderlich',
     statikGap: 'Statik nicht geprüft',

@@ -6,6 +6,8 @@ import { copy } from '../lib/copy';
 import { BigNumber } from './BigNumber';
 import { FeasibilityAmpel } from './FeasibilityAmpel';
 import { BzoDisclosure } from './BzoDisclosure';
+import { VerdictBadge } from './VerdictBadge';
+import { BgfBar } from './BgfBar';
 
 interface Props {
   result: LiveAnalysisResult;
@@ -44,10 +46,31 @@ export function ResultCard({ result, askingPriceCHF }: Props) {
   return (
     <article className="rounded-xl border border-buildx-accent-border bg-buildx-accent-soft p-6">
       <header className="border-b border-buildx-accent-border pb-3">
-        <h2 className="text-base font-semibold text-zinc-900">
-          {address.display}
-        </h2>
-        <p className="mt-1 text-xs text-zinc-500">{headerMeta}</p>
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div>
+            <h2 className="text-base font-semibold text-zinc-900">
+              {address.display}
+            </h2>
+            <p className="mt-1 text-xs text-zinc-500">{headerMeta}</p>
+          </div>
+          <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+            <VerdictBadge
+              reserve_2026={reserve_m2.bzo_2026}
+              denkmal={feasibility.denkmal}
+              az_reserve={feasibility.az_reserve}
+            />
+            {'lat' in address && typeof address.lat === 'number' && (
+              <a
+                href={`https://www.openstreetmap.org/?mlat=${address.lat}&mlon=${address.lon}#map=17/${address.lat}/${address.lon}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-zinc-400 hover:text-buildx-accent"
+              >
+                {copy.map.openMap}
+              </a>
+            )}
+          </div>
+        </div>
       </header>
 
       <div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -70,7 +93,14 @@ export function ResultCard({ result, askingPriceCHF }: Props) {
         />
       </div>
 
-      <footer className="mt-6 flex flex-col gap-3">
+      <BgfBar
+        bestehende_bgf={address.bestehende_bgf}
+        reserve_bzo_2016={reserve_m2.bzo_2016}
+        reserve_bzo_2026={reserve_m2.bzo_2026}
+        show_compare={reserve_m2.show_compare}
+      />
+
+      <footer className="mt-4 flex flex-col gap-3">
         <BzoDisclosure />
         {askingPriceCHF !== undefined && net_chf.base > 0 && (() => {
           const ratio = net_chf.base / askingPriceCHF;
