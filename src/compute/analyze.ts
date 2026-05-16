@@ -65,6 +65,8 @@ export function deriveBauweise(baujahr: number | undefined): Bauweise {
 
 // PLZ → Stadtkreis for all residential postal codes within Stadt Zürich.
 // Approximate (PLZ boundaries don't align perfectly with Kreis borders).
+// Codes 8010–8099 that are not listed are corporate PO boxes (UBS, Swiss Re,
+// Zurich Insurance etc.) and do not correspond to a residential Stadtkreis.
 const PLZ_TO_KREIS: Partial<Record<string, Stadtkreis>> = {
   '8001': 1,  // Altstadt, Hochschulquartier
   '8002': 2,  // Enge
@@ -74,9 +76,16 @@ const PLZ_TO_KREIS: Partial<Record<string, Stadtkreis>> = {
   '8006': 6,  // Unterstrass, Oberstrass
   '8008': 8,  // Riesbach, Seefeld
   '8032': 8,  // Mühlebach (Kreis 8)
+  '8033': 7,  // Zürichberg (Hottingen / Hirslanden edge)
+  '8034': 7,  // Zürichberg (Hirslanden)
+  '8036': 3,  // Sihlfeld / Friesenberg (Kreis 3 south)
   '8037': 10, // Wipkingen
   '8038': 2,  // Wollishofen
+  '8039': 2,  // Wollishofen (south)
+  '8040': 3,  // Leimbach / Sihlfeld (Kreis 3 south-west)
   '8041': 3,  // Leimbach
+  '8042': 12, // Schwamendingen-Mitte
+  '8043': 12, // Schwamendingen (east)
   '8044': 7,  // Fluntern, Hottingen, Hirslanden
   '8045': 3,  // Friesenberg
   '8046': 10, // Höngg
@@ -89,6 +98,7 @@ const PLZ_TO_KREIS: Partial<Record<string, Stadtkreis>> = {
   '8053': 7,  // Witikon
   '8055': 3,  // Wiedikon (south)
   '8057': 11, // Seebach
+  '8063': 3,  // Wiedikon (Kreis 3 west)
   '8064': 9,  // Altstetten Süd
 };
 
